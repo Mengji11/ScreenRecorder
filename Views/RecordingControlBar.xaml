@@ -1,0 +1,51 @@
+<Window x:Class="ScreenRecorder.Views.RecordingControlBar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="录制控制" Height="45" Width="250"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        Left="100" Top="100"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <Border Background="#CC000000" CornerRadius="8" Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 录制指示器 -->
+            <Ellipse x:Name="recIndicator" Grid.Column="0" Width="12" Height="12" 
+                     Fill="#FF4D4F" Margin="0,0,10,0"/>
+
+            <!-- 时间显示 -->
+            <TextBlock x:Name="txtTime" Grid.Column="1" Text="00:00:00" 
+                       Foreground="White" FontSize="14" FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+
+            <!-- 暂停按钮 -->
+            <Button x:Name="btnPause" Grid.Column="2" Content="⏸" 
+                    Background="Transparent" Foreground="White" BorderThickness="0"
+                    FontSize="16" Padding="8,2" Cursor="Hand"
+                    Click="BtnPause_Click"/>
+
+            <!-- 截图按钮 -->
+            <Button x:Name="btnScreenshot" Grid.Column="3" Content="📷" 
+                    Background="Transparent" Foreground="White" BorderThickness="0"
+                    FontSize="14" Padding="8,2" Cursor="Hand"
+                    Click="BtnScreenshot_Click"/>
+
+            <!-- 停止按钮 -->
+            <Button x:Name="btnStop" Grid.Column="4" Content="⏹" 
+                    Background="Transparent" Foreground="#FF4D4F" BorderThickness="0"
+                    FontSize="16" Padding="8,2" Cursor="Hand"
+                    Click="BtnStop_Click"/>
+        </Grid>
+    </Border>
+</Window>

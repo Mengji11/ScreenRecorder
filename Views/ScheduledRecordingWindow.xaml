@@ -1,0 +1,82 @@
+<Window x:Class="ScreenRecorder.Views.ScheduledRecordingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="定时录制" Height="450" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F5F7FA">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Grid.Row="0" Text="定时录制" FontSize="16" FontWeight="Bold" 
+                   Foreground="#333" Margin="0,0,0,12"/>
+
+        <!-- 录制模式 -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,12">
+            <TextBlock Text="录制模式" FontSize="12" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,6"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="rbFullScreen" Content="全屏" IsChecked="True" Margin="0,0,20,0" Cursor="Hand"/>
+                <RadioButton x:Name="rbRegion" Content="区域" Margin="0,0,20,0" Cursor="Hand"/>
+                <RadioButton x:Name="rbWindow" Content="窗口" Cursor="Hand"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- 开始时间 -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,12">
+            <TextBlock Text="开始时间" FontSize="12" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,6"/>
+            <StackPanel Orientation="Horizontal">
+                <DatePicker x:Name="dpStartDate" Width="150" Padding="8,4" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtStartTime" Text="00:00:00" Width="90" 
+                         Padding="8,4" VerticalContentAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- 结束时间 -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,12">
+            <TextBlock Text="结束时间" FontSize="12" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,6"/>
+            <StackPanel Orientation="Horizontal">
+                <DatePicker x:Name="dpEndDate" Width="150" Padding="8,4" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtEndTime" Text="00:00:00" Width="90" 
+                         Padding="8,4" VerticalContentAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- 选项 -->
+        <CheckBox x:Name="chkAutoStop" Grid.Row="4" Content="到时自动停止录制" IsChecked="True" 
+                  Margin="0,0,0,12" Cursor="Hand"/>
+
+        <!-- 状态 -->
+        <Border Grid.Row="5" Background="White" BorderBrush="#E0E0E0" BorderThickness="1" 
+                CornerRadius="6" Padding="12,8" Margin="0,0,0,12">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="8" Height="8" Fill="#999" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="txtStatus" Text="未设置" FontSize="12" FontWeight="SemiBold" Foreground="#333"/>
+                </StackPanel>
+                <TextBlock x:Name="txtCountdown" Text="" FontSize="11" Foreground="#4A90D9" Margin="14,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 按钮 -->
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnStartTimer" Content="启动定时" Padding="16,6" Margin="0,0,6,0" 
+                    Click="BtnStartTimer_Click" Background="#4A90D9" Foreground="White" 
+                    BorderThickness="0" Cursor="Hand"/>
+            <Button x:Name="btnCancelTimer" Content="取消定时" Padding="16,6" Margin="0,0,6,0" 
+                    Click="BtnCancelTimer_Click" IsEnabled="False"
+                    Background="#FF4D4F" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+            <Button Content="关闭" Padding="16,6" Click="BtnClose_Click"
+                    Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</Window>

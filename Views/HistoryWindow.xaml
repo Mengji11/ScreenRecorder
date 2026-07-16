@@ -1,0 +1,62 @@
+<Window x:Class="ScreenRecorder.Views.HistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="录制历史" Height="500" Width="700"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        Background="#F5F7FA">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 顶部工具栏 -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <CheckBox x:Name="chkSelectAll" Content="全选" VerticalAlignment="Center"
+                      Checked="ChkSelectAll_Checked" Unchecked="ChkSelectAll_Unchecked"
+                      Margin="0,0,12,0" Cursor="Hand"/>
+            <TextBlock x:Name="txtSelected" Text="" VerticalAlignment="Center" Foreground="#999" FontSize="12"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="刷新" Padding="12,5" Margin="0,0,6,0" Click="BtnRefresh_Click"
+                        Background="White" Foreground="#4A90D9" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="删除选中" Padding="12,5" Click="BtnDeleteSelected_Click"
+                        Background="#FF4D4F" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- 历史记录列表 -->
+        <DataGrid Grid.Row="1" x:Name="dgHistory" AutoGenerateColumns="False"
+                  HeadersVisibility="Column" GridLinesVisibility="None"
+                  Background="White" RowBackground="White"
+                  AlternatingRowBackground="#F9FBFF" CanUserAddRows="False"
+                  SelectionMode="Single" SelectionChanged="DgHistory_SelectionChanged"
+                  BorderBrush="#E0E0E0" BorderThickness="1">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="选择" Width="40"
+                                      Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="文件名" Binding="{Binding FileName}" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="时长" Binding="{Binding DurationString}" Width="70" IsReadOnly="True"/>
+                <DataGridTextColumn Header="大小" Binding="{Binding FileSizeString}" Width="70" IsReadOnly="True"/>
+                <DataGridTextColumn Header="分辨率" Binding="{Binding ResolutionString}" Width="90" IsReadOnly="True"/>
+                <DataGridTextColumn Header="录制时间" Binding="{Binding RecordingTime, StringFormat=yyyy-MM-dd HH:mm}" Width="120" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- 底部按钮 -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="播放" Padding="14,6" Margin="0,0,6,0" Click="BtnPlay_Click"
+                    Background="#52C41A" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+            <Button Content="导出GIF" Padding="14,6" Margin="0,0,6,0" Click="BtnExportGif_Click"
+                    Background="#FF9800" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+            <Button Content="打开文件夹" Padding="14,6" Margin="0,0,6,0" Click="BtnOpenFolder_Click"
+                    Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+            <Button Content="视频编辑" Padding="14,6" Margin="0,0,6,0" Click="BtnEdit_Click"
+                    Background="White" Foreground="#4A90D9" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+            <Button Content="关闭" Padding="14,6" Click="BtnClose_Click"
+                    Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</Window>

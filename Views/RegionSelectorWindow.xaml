@@ -1,0 +1,42 @@
+<Window x:Class="ScreenRecorder.Views.RegionSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="选择录制区域"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#40000000"
+        Topmost="True"
+        ShowInTaskbar="False"
+        Cursor="Cross"
+        KeyDown="Window_KeyDown"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        MouseMove="Window_MouseMove"
+        MouseLeftButtonUp="Window_MouseLeftButtonUp">
+
+    <Canvas x:Name="canvas">
+        <!-- 选区矩形 -->
+        <Rectangle x:Name="selectionRect"
+                   Stroke="#4A90D9"
+                   StrokeThickness="2"
+                   StrokeDashArray="4 2"
+                   Fill="#204A90D9"
+                   Canvas.Left="0"
+                   Canvas.Top="0"
+                   Width="0"
+                   Height="0"
+                   Visibility="Collapsed"/>
+
+        <!-- 选区尺寸标签 -->
+        <Border x:Name="sizeLabel"
+                Background="#CC000000"
+                CornerRadius="4"
+                Padding="8,4"
+                Canvas.Left="0"
+                Canvas.Top="0"
+                Visibility="Collapsed">
+            <TextBlock x:Name="txtSize"
+                       Foreground="White"
+                       FontSize="12"/>
+        </Border>
+    </Canvas>
+</Window>

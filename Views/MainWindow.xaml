@@ -1,0 +1,101 @@
+<Window x:Class="ScreenRecorder.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="录屏助手" Width="400" Height="420"
+        MinWidth="400" MinHeight="380"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip"
+        Background="#F5F7FA">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="16">
+            <!-- 录制模式 -->
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="录制模式" FontSize="12" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,6"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="rbFullScreen" Content="全屏" IsChecked="True" 
+                                 Checked="RecordingMode_Changed" Margin="0,0,20,0" Cursor="Hand"/>
+                    <RadioButton x:Name="rbWindow" Content="窗口" 
+                                 Checked="RecordingMode_Changed" Margin="0,0,20,0" Cursor="Hand"/>
+                    <RadioButton x:Name="rbRegion" Content="区域" 
+                                 Checked="RecordingMode_Changed" Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- 录制选项 -->
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="录制选项" FontSize="12" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,6"/>
+                <WrapPanel>
+                    <CheckBox x:Name="chkSystemAudio" Content="系统声音" IsChecked="True" Margin="0,0,16,0" Cursor="Hand"/>
+                    <CheckBox x:Name="chkMicrophone" Content="麦克风" IsChecked="True" Margin="0,0,16,0" Cursor="Hand"/>
+                    <CheckBox x:Name="chkMouseHighlight" Content="鼠标高亮" IsChecked="True" Margin="0,0,16,0" Cursor="Hand"/>
+                    <CheckBox x:Name="chkWatermark" Content="水印" Cursor="Hand"/>
+                </WrapPanel>
+            </StackPanel>
+
+            <!-- 参数 -->
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="参数" FontSize="12" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,6"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="显示器:" VerticalAlignment="Center" Margin="0,0,6,0" Foreground="#666"/>
+                    <ComboBox x:Name="cmbMonitor" Width="140" Padding="6,4"/>
+                    <TextBlock Text="帧率:" VerticalAlignment="Center" Margin="16,0,6,0" Foreground="#666"/>
+                    <ComboBox x:Name="cmbFrameRate" Width="80" Padding="6,4">
+                        <ComboBoxItem Content="30fps" IsSelected="True"/>
+                        <ComboBoxItem Content="60fps"/>
+                        <ComboBoxItem Content="15fps"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- 状态 -->
+            <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1" 
+                    CornerRadius="6" Padding="12,8" Margin="0,0,0,10">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <Ellipse Width="8" Height="8" Fill="#52C41A" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="txtStatus" Text="就绪" FontSize="12" FontWeight="SemiBold" Foreground="#333"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="时长:" Foreground="#999" FontSize="11" Margin="14,0,6,0"/>
+                        <TextBlock x:Name="txtDuration" Text="00:00:00" FontSize="11" Foreground="#333"/>
+                        <TextBlock Text="  F5:开始/停止  F7:暂停  F8:截图" Foreground="#BBB" FontSize="10" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- 开始录制 -->
+            <Button x:Name="btnStart" Content="开始录制" 
+                    Click="BtnStart_Click" Height="44" FontSize="15" FontWeight="SemiBold"
+                    Margin="0,0,0,10" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="#4A90D9" CornerRadius="8" Padding="20,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#357ABD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2A5F9E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <!-- 底部按钮 -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnSettings" Content="设置" Click="BtnSettings_Click" Padding="16,6" Margin="0,0,8,0"
+                        Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="btnHistory" Content="历史" Click="BtnHistory_Click" Padding="16,6" Margin="0,0,8,0"
+                        Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="btnScheduled" Content="定时" Click="BtnScheduled_Click" Padding="16,6" Margin="0,0,8,0"
+                        Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="btnMinimize" Content="最小化" Click="BtnMinimize_Click" Padding="16,6"
+                        Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
