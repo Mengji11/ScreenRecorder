@@ -38,9 +38,16 @@ namespace ScreenRecorder.Services
             SaveHistory();
         }
 
-        public void RemoveEntry(string filePath)
+        public void RemoveEntry(string filePath, bool save = true)
         {
             _history.RemoveAll(h => h.FilePath == filePath);
+            if (save) SaveHistory();
+        }
+
+        public void RemoveEntries(IEnumerable<string> filePaths)
+        {
+            var set = new HashSet<string>(filePaths);
+            _history.RemoveAll(h => set.Contains(h.FilePath));
             SaveHistory();
         }
 

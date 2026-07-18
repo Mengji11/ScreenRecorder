@@ -70,7 +70,6 @@ namespace ScreenRecorder.Views
             try
             {
                 string startStr = start.ToString(@"hh\:mm\:ss");
-                string endStr = end.ToString(@"hh\:mm\:ss");
                 string duration = (end - start).ToString(@"hh\:mm\:ss");
 
                 var psi = new ProcessStartInfo

@@ -145,18 +145,21 @@ namespace ScreenRecorder.Views
                 chkMicrophone.IsChecked = false;
                 _settings.RecordSystemAudio = false;
                 _settings.RecordMicrophone = false;
+                _settingsService.SaveSettings(_settings);
             }
             else if (!hasSystem)
             {
                 chkSystemAudio.IsEnabled = false;
                 chkSystemAudio.IsChecked = false;
                 _settings.RecordSystemAudio = false;
+                _settingsService.SaveSettings(_settings);
             }
             else if (!hasMic)
             {
                 chkMicrophone.IsEnabled = false;
                 chkMicrophone.IsChecked = false;
                 _settings.RecordMicrophone = false;
+                _settingsService.SaveSettings(_settings);
             }
         }
 

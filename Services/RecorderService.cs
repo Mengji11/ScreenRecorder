@@ -40,6 +40,8 @@ namespace ScreenRecorder.Services
         private TimeSpan _currentDuration;
         private Rect _captureRegion;
         private IntPtr _windowHandle;
+        private int _captureOffsetX;
+        private int _captureOffsetY;
         private readonly object _mouseClicksLock = new();
         private List<MouseClickInfo> _mouseClicks = new();
         private bool _wasMouseDown;
@@ -98,6 +100,30 @@ namespace ScreenRecorder.Services
                 _startTime = DateTime.Now;
                 _frameCount = 0;
                 _captureStopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+                // Compute capture offset for mouse click coordinate adjustment
+                _captureOffsetX = 0;
+                _captureOffsetY = 0;
+                if (mode == RecordingMode.Region)
+                {
+                    _captureOffsetX = (int)_captureRegion.X;
+                    _captureOffsetY = (int)_captureRegion.Y;
+                }
+                else if (mode == RecordingMode.Window && windowHandle != default)
+                {
+                    var windowRect = _screenCapture.GetWindowRectangle(windowHandle);
+                    _captureOffsetX = (int)windowRect.X;
+                    _captureOffsetY = (int)windowRect.Y;
+                }
+                else if (mode == RecordingMode.FullScreen && _settings.MonitorIndex > 0)
+                {
+                    var monitors = MonitorHelper.GetAllMonitors();
+                    if (_settings.MonitorIndex < monitors.Count)
+                    {
+                        _captureOffsetX = monitors[_settings.MonitorIndex].Bounds.X;
+                        _captureOffsetY = monitors[_settings.MonitorIndex].Bounds.Y;
+                    }
+                }
 
                 // Create temp file for streaming frames to disk
                 _tempFramePath = Path.Combine(Path.GetTempPath(), $"sr_frames_{Guid.NewGuid():N}.bin");
@@ -234,13 +260,19 @@ namespace ScreenRecorder.Services
 
                 // Convert to BGR24 and write directly to disk (memory stays constant)
                 byte[] bgrData = BitmapToBgr24(frame);
-                int bgrLen = _frameWidth * _frameHeight * 3;
-                lock (_frameStream)
+                try
                 {
-                    _frameStream.Write(bgrData, 0, bgrLen);
+                    int bgrLen = _frameWidth * _frameHeight * 3;
+                    lock (_frameStream)
+                    {
+                        _frameStream.Write(bgrData, 0, bgrLen);
+                    }
+                    frame.Dispose();
                 }
-                frame.Dispose();
-                ArrayPool<byte>.Shared.Return(bgrData);
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(bgrData);
+                }
                 Interlocked.Increment(ref _frameCount);
             }
             catch (Exception ex)
@@ -258,14 +290,8 @@ namespace ScreenRecorder.Services
             {
                 GetCursorPos(out POINT cursorPos);
 
-                int x = cursorPos.X;
-                int y = cursorPos.Y;
-
-                if (_mode == RecordingMode.Region)
-                {
-                    x -= (int)_captureRegion.X;
-                    y -= (int)_captureRegion.Y;
-                }
+                int x = cursorPos.X - _captureOffsetX;
+                int y = cursorPos.Y - _captureOffsetY;
 
                 lock (_mouseClicksLock)
                 {
@@ -583,6 +609,7 @@ namespace ScreenRecorder.Services
             }
             catch (Exception ex)
             {
+                try { File.Delete(framePath); } catch { }
                 ErrorOccurred?.Invoke(this, $"保存录制失败: {ex.Message}");
             }
             finally

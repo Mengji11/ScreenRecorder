@@ -109,7 +109,7 @@ namespace ScreenRecorder.Services
         {
             try
             {
-                var enumerator = new MMDeviceEnumerator();
+                using var enumerator = new MMDeviceEnumerator();
                 var device = enumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Console);
 
                 _microphoneCapture = new WasapiCapture(device);

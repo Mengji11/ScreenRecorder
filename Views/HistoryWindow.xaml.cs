@@ -26,9 +26,9 @@ namespace ScreenRecorder.Views
         {
             // Filter out entries whose files no longer exist
             var stalePaths = _history.Where(item => !File.Exists(item.FilePath)).Select(item => item.FilePath).ToList();
-            foreach (var path in stalePaths)
+            if (stalePaths.Count > 0)
             {
-                _historyService.RemoveEntry(path);
+                _historyService.RemoveEntries(stalePaths);
             }
             _history = _history.Where(item => File.Exists(item.FilePath)).ToList();
 
@@ -96,7 +96,6 @@ namespace ScreenRecorder.Views
                     }
                     else
                     {
-                        // File already gone, still remove from history
                         deletedCount++;
                     }
                 }
@@ -105,8 +104,10 @@ namespace ScreenRecorder.Views
                     failedCount++;
                     System.Diagnostics.Debug.WriteLine($"Failed to delete {item.FilePath}: {ex.Message}");
                 }
-                _historyService.RemoveEntry(item.FilePath);
             }
+
+            // Batch remove from history (single save)
+            _historyService.RemoveEntries(selected.Select(i => i.FilePath));
 
             _history = _historyService.LoadHistory();
             LoadHistory();

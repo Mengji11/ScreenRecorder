@@ -49,6 +49,8 @@ namespace ScreenRecorder.Views
         protected override void OnClosed(EventArgs e)
         {
             StopBlinking();
+            _recorder.DurationChanged -= Recorder_DurationChanged;
+            _recorder.StateChanged -= Recorder_StateChanged;
             base.OnClosed(e);
         }
 

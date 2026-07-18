@@ -40,9 +40,6 @@ ScreenRecorder/
 | 包名 | 版本 | 用途 |
 |------|------|------|
 | NAudio | 2.2.1 | 音频捕获（WasapiLoopbackCapture 系统声音，WasapiCapture 麦克风） |
-| SharpDX | 4.2.0 | DirectX 互操作 |
-| SharpDX.Direct3D11 | 4.2.0 | Direct3D 11 |
-| SharpDX.DXGI | 4.2.0 | DXGI 接口 |
 
 ## 数据流
 
