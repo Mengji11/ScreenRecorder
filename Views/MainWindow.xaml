@@ -7,8 +7,7 @@
         ResizeMode="CanResizeWithGrip"
         Background="#F5F7FA">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="16">
+    <StackPanel Margin="16">
             <!-- 录制模式 -->
             <StackPanel Margin="0,0,0,10">
                 <TextBlock Text="录制模式" FontSize="12" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,6"/>
@@ -97,5 +96,4 @@
                         Background="White" Foreground="#666" BorderBrush="#DDD" BorderThickness="1" Cursor="Hand"/>
             </StackPanel>
         </StackPanel>
-    </ScrollViewer>
 </Window>

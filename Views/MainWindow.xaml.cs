@@ -462,6 +462,15 @@ namespace ScreenRecorder.Views
             chkMicrophone.IsChecked = _settings.RecordMicrophone;
             chkMouseHighlight.IsChecked = _settings.ShowMouseClickHighlight;
             chkWatermark.IsChecked = _settings.EnableWatermark;
+
+            foreach (System.Windows.Controls.ComboBoxItem item in cmbFrameRate.Items)
+            {
+                if (item.Content is string text && text == $"{_settings.FrameRate}fps")
+                {
+                    item.IsSelected = true;
+                    break;
+                }
+            }
         }
 
         private void SaveSettingsFromUI()
